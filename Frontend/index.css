@@ -1,10 +1,39 @@
-@theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
-  --grid-template-columns-18: repeat(18, minmax(0, 1fr));
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================= */
+/* 🌗 THEME SYSTEM (TAILWIND DARK MODE) */
+/* ============================= */
+
+html.light {
+  background: #f8fafc;
+  color: #0f172a;
 }
 
-/* Custom Scrollbar */
+html.dark {
+  background: #020617;
+  color: #ffffff;
+}
+
+/* Smooth transitions */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ============================= */
+/* 🎯 GLOBAL RESET */
+/* ============================= */
+
+body {
+  margin: 0;
+  font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* ============================= */
+/* 🎨 SCROLLBAR */
+/* ============================= */
+
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -15,156 +44,102 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(99, 102, 241, 0.1);
+  background: rgba(99, 102, 241, 0.3);
   border-radius: 10px;
-  border: 2px solid transparent;
-  background-clip: content-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(99, 102, 241, 0.3);
-  border: 2px solid transparent;
-  background-clip: content-box;
+  background: rgba(99, 102, 241, 0.5);
 }
 
-/* Prose Styles for Markdown */
+/* ============================= */
+/* 📄 PROSE (CONTENT STYLING) */
+/* ============================= */
+
 .prose {
-  color: #94a3b8;
   max-width: 65ch;
 }
 
 .prose h1 {
-  color: #f8fafc;
-  font-weight: 900;
-  font-size: 2.25rem;
-  margin-top: 0;
-  margin-bottom: 2rem;
-  letter-spacing: -0.05em;
-  text-transform: uppercase;
-  font-style: italic;
+  font-size: 2.2rem;
+  font-weight: 800;
 }
 
 .prose h2 {
-  color: #f8fafc;
-  font-weight: 800;
   font-size: 1.5rem;
-  margin-top: 3rem;
-  margin-bottom: 1.5rem;
-  letter-spacing: -0.02em;
-}
-
-.prose p {
-  margin-top: 1.25rem;
-  margin-bottom: 1.25rem;
-  line-height: 1.75;
-}
-
-.prose strong {
-  color: #818cf8;
   font-weight: 700;
 }
 
+.prose p {
+  line-height: 1.7;
+  margin: 1rem 0;
+}
+
 .prose ul {
-  margin-top: 1.25rem;
-  margin-bottom: 1.25rem;
-  list-style-type: disc;
-  padding-left: 1.625rem;
+  padding-left: 1.5rem;
 }
 
 .prose li {
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
+  margin: 0.4rem 0;
 }
 
 .prose code {
-  color: #818cf8;
-  background-color: rgba(129, 140, 248, 0.1);
-  padding: 0.2rem 0.4rem;
-  border-radius: 0.375rem;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  font-size: 0.875em;
+  background: rgba(99, 102, 241, 0.1);
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-size: 0.85rem;
 }
 
-/* Glassmorphism Panel */
+/* ============================= */
+/* ✨ GLASS UI */
+/* ============================= */
+
 .glass-panel {
-  background: rgba(15, 23, 42, 0.7);
   backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
+html.dark .glass-panel {
+  background: rgba(15, 23, 42, 0.6);
 }
 
-.scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+html.light .glass-panel {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
-.light-mode .glass-panel {
-  background: rgba(255, 255, 255, 0.8);
-  border-color: rgba(15, 23, 42, 0.08);
-}
-/* Improve overall spacing */
-.container {
-  padding: 40px 80px;
-}
+/* ============================= */
+/* 🧩 CARD */
+/* ============================= */
 
-/* Center content properly */
-body {
-  display: flex;
-  justify-content: center;
-}
-
-/* Improve card layout */
 .card {
   border-radius: 16px;
   padding: 20px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: all 0.3s ease;
 }
+
 .card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-  cursor: pointer;
-}
-/* LIGHT MODE */
-.light-mode {
-  background: #f8fafc !important;
-  color: #0f172a !important;
+  transform: translateY(-6px);
 }
 
-.light-mode .bg-slate-900 {
-  background: #ffffff !important;
-}
+/* ============================= */
+/* 🔥 HEADINGS */
+/* ============================= */
 
-.light-mode .text-white {
-  color: #0f172a !important;
-}
-
-.light-mode .text-slate-400 {
-  color: #334155 !important;
-}
-
-.light-mode .bg-\[\#020617\] {
-  background: #f1f5f9 !important;
-}
 h1 {
-  font-size: 56px;
-  background: linear-gradient(90deg, #ffffff, #6366f1);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  font-size: 48px;
+  font-weight: 800;
 }
-.card-glow:hover {
-  box-shadow: 0 0 25px rgba(99, 102, 241, 0.6);
-}
+
+/* ============================= */
+/* 🎯 BUTTON */
+/* ============================= */
+
 button {
   transition: all 0.3s ease;
 }
 
 button:hover {
   transform: scale(1.05);
-}
-.light-mode {
-  background: #f8fafc;
-  color: #0f172a;
 }

@@ -106,19 +106,235 @@ Electron configuration is the distribution of electrons of an atom or molecule i
     ]
   },
   {
-    id: SubjectId.PHYSICS,
-    name: 'Physics',
-    icon: 'Zap',
-    color: 'blue',
-    topics: [
-      {
-        id: TopicId.MECHANICS,
-        name: 'Classical Mechanics',
-        description: 'Study motion, forces, and energy in the macroscopic world.',
-        theory: '# Classical Mechanics\nComing soon! Explore Newton\'s laws, kinematics, and dynamics.'
-      }
-    ]
-  },
+  id: SubjectId.PHYSICS,
+  name: 'Physics',
+  icon: 'Zap',
+  color: 'blue',
+  topics: [
+    {
+      id: TopicId.MECHANICS,
+      name: 'Mechanics',
+      description: 'Study motion, forces, energy, and momentum.',
+      theory: `Mechanics
+
+Introduction
+Mechanics is the branch of physics that studies motion and forces.
+
+Types of Motion
+- Linear Motion
+- Circular Motion
+- Oscillatory Motion
+
+Kinematics
+
+Displacement, Velocity, Acceleration
+$$ v = \\frac{dx}{dt} $$
+$$ a = \\frac{dv}{dt} $$
+
+Equations of Motion
+$$ v = u + at $$
+$$ s = ut + \\frac{1}{2}at^2 $$
+$$ v^2 = u^2 + 2as $$
+
+Graph Interpretation
+- Slope of position-time graph = velocity
+- Area under velocity-time graph = displacement
+
+Dynamics (Forces)
+
+Newton’s First Law (Inertia)
+- Objects resist change in motion
+
+Newton’s Second Law
+$$ F = ma $$
+
+Newton’s Third Law
+- Action = Reaction
+
+Friction
+- Opposes motion
+- Static and kinetic friction
+
+Circular Motion
+
+Centripetal Force
+$$ F = \\frac{mv^2}{r} $$
+
+Work, Energy, Power
+
+Work Done
+$$ W = F \\cdot d $$
+
+Kinetic Energy
+$$ KE = \\frac{1}{2}mv^2 $$
+
+Potential Energy
+$$ PE = mgh $$
+
+Power
+$$ P = \\frac{W}{t} $$
+
+Conservation of Energy
+- Energy remains constant
+
+Momentum
+
+$$ p = mv $$
+
+Impulse
+$$ J = F \\cdot t $$
+
+Law of Conservation of Momentum
+- Total momentum remains constant`
+    },
+
+    {
+      id: TopicId.ELECTRICITY,
+      name: 'Electricity & Magnetism',
+      description: 'Understand current, circuits, and magnetic fields.',
+      theory: `Electricity
+
+Electric Charge
+- Fundamental property of matter
+
+Current
+$$ I = \\frac{Q}{t} $$
+
+Voltage
+$$ V = \\frac{W}{Q} $$
+
+Ohm’s Law
+$$ V = IR $$
+
+Resistance
+- Opposition to current flow
+
+Power
+$$ P = VI $$
+
+Electric Circuits
+
+Series Circuit
+$$ R_{eq} = R_1 + R_2 $$
+
+Parallel Circuit
+$$ \\frac{1}{R_{eq}} = \\frac{1}{R_1} + \\frac{1}{R_2} $$
+
+Capacitance
+$$ C = \\frac{Q}{V} $$
+
+Magnetism
+
+Magnetic Field
+- Region around magnet where force acts
+
+Force on Moving Charge
+$$ F = qvB \\sin\\theta $$
+
+Electromagnetic Induction
+
+Faraday’s Law
+$$ \\mathcal{E} = -\\frac{d\\Phi}{dt} $$
+
+Applications
+- Motors
+- Generators
+- Transformers`
+    },
+
+    {
+      id: TopicId.OPTICS,
+      name: 'Optics',
+      description: 'Study light, reflection, refraction, and lenses.',
+      theory: `Optics
+
+Nature of Light
+- Wave-particle duality
+
+Reflection
+
+Law of Reflection
+$$ \\theta_i = \\theta_r $$
+
+Refraction
+
+Snell’s Law
+$$ n_1 \\sin\\theta_1 = n_2 \\sin\\theta_2 $$
+
+Refractive Index
+$$ n = \\frac{c}{v} $$
+
+Total Internal Reflection
+- Light reflects completely inside medium
+
+Lenses
+
+Lens Formula
+$$ \\frac{1}{f} = \\frac{1}{v} + \\frac{1}{u} $$
+
+Magnification
+$$ M = \\frac{v}{u} $$
+
+Optical Instruments
+- Microscope
+- Telescope
+- Camera
+
+Wave Optics
+
+Interference
+- Superposition of waves
+
+Diffraction
+- Bending of waves around obstacles
+
+Applications
+- Fiber optics
+- Imaging systems`
+    },
+
+    {
+      id: TopicId.THERMODYNAMICS,
+      name: 'Thermodynamics',
+      description: 'Study heat, temperature, and energy transfer.',
+      theory: `Thermodynamics
+
+Introduction
+Thermodynamics deals with heat and energy transfer.
+
+Temperature
+- Measure of thermal energy
+
+Heat
+$$ Q = mc\\Delta T $$
+
+First Law of Thermodynamics
+$$ \\Delta Q = \\Delta U + W $$
+
+Second Law
+- Heat flows from hot to cold
+
+Entropy
+- Measure of disorder
+
+Ideal Gas Law
+$$ PV = nRT $$
+
+Processes
+
+Isothermal Process
+- Temperature constant
+
+Adiabatic Process
+- No heat exchange
+
+Applications
+- Engines
+- Refrigerators
+- Power plants`
+    }
+  ]
+},
 {
   id: SubjectId.MATH,
   name: 'Mathematics',
@@ -129,128 +345,109 @@ Electron configuration is the distribution of electrons of an atom or molecule i
       id: TopicId.ALGEBRA,
       name: 'Algebra',
       description: 'Learn equations, variables, and problem solving.',
-      theory: `
-# Algebra
+      theory: `Algebra
 
-Algebra is the branch of mathematics that uses symbols and variables to represent numbers and relationships.
+Introduction
+Algebra is the study of mathematical symbols and rules for manipulating them.
 
-## Key Concepts
+Expressions
+- Combination of variables and constants
+- Example: 2x + 3
 
-• Variables: Symbols like x, y represent unknown values  
-• Constants: Fixed values like 2, 5, 10  
-• Expressions: Combination of variables and numbers  
-
-## Linear Equation
-$$ax + b = 0$$
-
-Solution:
-$$x = -\\frac{b}{a}$$
-
-## Example
-Solve:
-$$2x + 4 = 0$$
-
-$$2x = -4$$  
-$$x = -2$$
-
-## Quadratic Equation
-$$ax^2 + bx + c = 0$$
+Equations
+- Statement of equality
+$$ ax + b = 0 $$
 
 Solution:
-$$x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$$
+$$ x = -\\frac{b}{a} $$
 
-## Why Algebra Matters
-• Used in programming  
-• Helps in problem solving  
-• Foundation for higher mathematics  
-`
+Quadratic Equations
+$$ ax^2 + bx + c = 0 $$
+
+Solution:
+$$ x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a} $$
+
+Identities
+$$ (a + b)^2 = a^2 + 2ab + b^2 $$
+$$ (a - b)^2 = a^2 - 2ab + b^2 $$
+
+Polynomials
+- Expressions with powers of variables
+
+Applications
+- Engineering
+- Physics equations
+- Computer science algorithms`
     },
 
     {
       id: TopicId.CALCULUS,
       name: 'Calculus',
       description: 'Understand change through derivatives and integrals.',
-      theory: `
-# Calculus
+      theory: `Calculus
 
-Calculus studies how things change and accumulate.
+Introduction
+Calculus studies change and accumulation.
 
-## 1. Limits
-Limits describe behavior of functions as input approaches a value.
+Limits
+- Value a function approaches
+$$ \\lim_{x \\to a} f(x) $$
 
-$$\\lim_{x \\to a} f(x)$$
+Derivatives
+- Rate of change
+$$ \\frac{dy}{dx} $$
 
-## 2. Derivatives (Rate of Change)
+Example:
+$$ \\frac{d}{dx}(x^2) = 2x $$
 
-Derivative measures how fast something changes.
+Second Derivative
+$$ \\frac{d^2y}{dx^2} $$
 
-$$\\frac{d}{dx}(x^n) = nx^{n-1}$$
+Applications
+- Velocity and acceleration
+- Optimization problems
 
-### Example
-$$\\frac{d}{dx}(x^2) = 2x$$
+Integrals
+- Area under curve
+$$ \\int f(x) dx $$
 
-Used in:
-• Speed & motion  
-• Optimization problems  
+Example:
+$$ \\int x dx = \\frac{x^2}{2} + C $$
 
-## 3. Integrals (Area Under Curve)
+Definite Integral
+$$ \\int_a^b f(x) dx $$
 
-$$\\int x^n dx = \\frac{x^{n+1}}{n+1} + C$$
-
-### Example
-$$\\int x^2 dx = \\frac{x^3}{3} + C$$
-
-Used in:
-• Finding area  
-• Physics (work, energy)
-
-## Real Life Applications
-• Engineering  
-• AI & Machine Learning  
-• Economics
-`
+Fundamental Theorem
+- Connects derivative and integral`
     },
 
     {
       id: TopicId.TRIGONOMETRY,
       name: 'Trigonometry',
       description: 'Study angles and relationships in triangles.',
-      theory: `
-# Trigonometry
+      theory: `Trigonometry
 
-Trigonometry studies relationships between angles and sides of triangles.
+Introduction
+Trigonometry deals with relationships between angles and sides.
 
-## Basic Ratios
+Basic Ratios
+$$ \\sin\\theta = \\frac{opposite}{hypotenuse} $$
+$$ \\cos\\theta = \\frac{adjacent}{hypotenuse} $$
+$$ \\tan\\theta = \\frac{opposite}{adjacent} $$
 
-$$\\sin \\theta = \\frac{opposite}{hypotenuse}$$  
-$$\\cos \\theta = \\frac{adjacent}{hypotenuse}$$  
-$$\\tan \\theta = \\frac{opposite}{adjacent}$$  
+Pythagorean Identity
+$$ \\sin^2\\theta + \\cos^2\\theta = 1 $$
 
-## Important Identity
+Angle Identities
+$$ \\sin(A + B) = \\sin A \\cos B + \\cos A \\sin B $$
 
-$$\\sin^2\\theta + \\cos^2\\theta = 1$$
+Graphs
+- Sine and cosine are periodic functions
 
-## Example
-
-If:
-$$\\sin \\theta = \\frac{3}{5}$$
-
-Then:
-$$\\cos \\theta = \\frac{4}{5}$$
-
-## Applications
-• Navigation (GPS)  
-• Waves & sound  
-• Computer graphics  
-
-## Graph Insight
-
-Sine wave:
-$$y = \\sin x$$
-
-It is periodic and repeats every:
-$$2\\pi$$
-`
+Applications
+- Waves
+- Sound
+- Engineering`
     }
   ]
 },
