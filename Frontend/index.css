@@ -3,20 +3,22 @@
 @tailwind utilities;
 
 /* ============================= */
-/* 🌗 THEME SYSTEM (TAILWIND DARK MODE) */
+/* 🌗 THEME SYSTEM (TAILWIND ONLY) */
 /* ============================= */
 
-html.light {
+/* Default (LIGHT MODE) */
+html {
   background: #f8fafc;
   color: #0f172a;
 }
 
+/* DARK MODE (controlled by .dark class from App.tsx) */
 html.dark {
   background: #020617;
   color: #ffffff;
 }
 
-/* Smooth transitions */
+/* Smooth transition */
 * {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
@@ -53,7 +55,7 @@ body {
 }
 
 /* ============================= */
-/* 📄 PROSE (CONTENT STYLING) */
+/* 📄 PROSE */
 /* ============================= */
 
 .prose {
@@ -100,11 +102,13 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-html.dark .glass-panel {
+/* Dark */
+.dark .glass-panel {
   background: rgba(15, 23, 42, 0.6);
 }
 
-html.light .glass-panel {
+/* Light */
+.glass-panel {
   background: rgba(255, 255, 255, 0.7);
   border: 1px solid rgba(0, 0, 0, 0.08);
 }

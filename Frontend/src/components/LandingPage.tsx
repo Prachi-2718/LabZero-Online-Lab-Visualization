@@ -1,0 +1,133 @@
+import React from 'react';
+import { Subject } from '../types/types';
+import { SUBJECTS } from '../utils/constants';
+import { Beaker, Zap, Calculator, Dna, ArrowRight, Globe, Sparkles } from 'lucide-react';
+import { motion } from 'motion/react';
+import { Language, translations } from '../services/translations';
+
+interface LandingPageProps {
+  onSelectSubject: (subject: Subject) => void;
+  language: Language;
+}
+
+const iconMap: Record<string, any> = {
+  Beaker,
+  Zap,
+  Calculator,
+  Dna,
+};
+
+const LandingPage: React.FC<LandingPageProps> = ({ onSelectSubject, language }) => {
+  const t = (key: string) => translations[key]?.[language] || key;
+  return (
+    <div className="relative min-h-screen overflow-hidden grainy">
+      {/* Background Decorative Elements */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/10 blur-[120px] rounded-full" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-rose-500/10 blur-[120px] rounded-full" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.05)_0%,transparent_70%)]" />
+      </div>
+
+      <div className="relative max-w-7xl mx-auto px-6 pt-32 pb-20">
+        <header className="mb-32">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="flex items-center gap-3 mb-8"
+          >
+            <div className="h-px w-12 bg-primary" />
+            <span className="text-xs font-mono uppercase tracking-[0.3em] text-primary">The Future of Learning</span>
+          </motion.div>
+
+          <motion.h1 
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="text-8xl md:text-9xl font-display font-bold tracking-tighter text-white leading-[0.8] mb-12"
+          >
+            LabZero<br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary">{translations.omniScience[language].split(' ')[1]}</span>
+          </motion.h1>
+
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 0.5 }}
+            className="grid grid-cols-1 md:grid-cols-2 gap-12 items-end"
+          >
+            <p className="text-xl md:text-2xl text-slate-400 font-light leading-relaxed max-w-xl">
+              {t('labDescription')}
+            </p>
+            <div className="flex flex-wrap gap-4 md:justify-end">
+              <div className="px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md flex items-center gap-2">
+                <Globe size={14} className="text-primary" />
+                <span className="text-[10px] font-mono uppercase tracking-widest text-slate-300">Real-time Visuals</span>
+              </div>
+              <div className="px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-md flex items-center gap-2">
+                <Sparkles size={14} className="text-rose-400" />
+                <span className="text-[10px] font-mono uppercase tracking-widest text-slate-300">AI Powered</span>
+              </div>
+            </div>
+          </motion.div>
+        </header>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-px bg-white/5 border border-white/5 rounded-3xl overflow-hidden">
+          {SUBJECTS.map((subject, index) => {
+            const Icon = iconMap[subject.icon] || Beaker;
+            const accentColor = {
+              emerald: 'group-hover:text-emerald-400',
+              blue: 'group-hover:text-blue-400',
+              amber: 'group-hover:text-amber-400',
+              rose: 'group-hover:text-rose-400',
+            }[subject.color] || 'group-hover:text-primary';
+
+            return (
+              <motion.button
+                key={subject.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
+                onClick={() => onSelectSubject(subject)}
+                className="group relative p-10 bg-[#020617] hover:bg-white/[0.02] transition-all duration-500 text-left flex flex-col h-[400px]"
+              >
+                <div className="flex-1">
+                  <div className={`w-12 h-12 mb-8 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-6 text-slate-500 ${accentColor}`}>
+                    <Icon size={48} strokeWidth={1.5} />
+                  </div>
+                  <h3 className="text-3xl font-display font-medium text-white mb-4 tracking-tight">{subject.name}</h3>
+                  <p className="text-slate-500 text-sm leading-relaxed font-light">
+                    {subject.topics.length} specialized modules exploring the core mechanics of {subject.name.toLowerCase()}.
+                  </p>
+                </div>
+                
+                <div className="mt-auto pt-8 border-t border-white/5 flex items-center justify-between">
+                  <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-slate-600 group-hover:text-slate-400 transition-colors">{t('enterLab')}</span>
+                  <ArrowRight size={18} className={`transition-all duration-500 -translate-x-4 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 ${accentColor}`} />
+                </div>
+
+                {/* Hover Glow */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
+                  <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-current to-transparent opacity-50 ${accentColor}`} />
+                </div>
+              </motion.button>
+            );
+          })}
+        </div>
+
+        <footer className="mt-32 pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
+          <div className="text-[10px] font-mono uppercase tracking-[0.3em] text-slate-600">
+            © 2024 OmniScience Laboratory / v2.4.0
+          </div>
+          <div className="flex gap-8">
+            <a href="#" className="text-[10px] font-mono uppercase tracking-[0.3em] text-slate-600 hover:text-primary transition-colors">Documentation</a>
+            <a href="#" className="text-[10px] font-mono uppercase tracking-[0.3em] text-slate-600 hover:text-primary transition-colors">Research</a>
+            <a href="#" className="text-[10px] font-mono uppercase tracking-[0.3em] text-slate-600 hover:text-primary transition-colors">Contact</a>
+          </div>
+        </footer>
+      </div>
+    </div>
+  );
+};
+
+export default LandingPage;

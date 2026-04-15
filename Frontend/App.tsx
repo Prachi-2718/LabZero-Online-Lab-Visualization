@@ -20,9 +20,13 @@ const App: React.FC = () => {
   const [selectedSubject, setSelectedSubject] = useState<Subject | null>(null);
   const [selectedTopic, setSelectedTopic] = useState<Topic | null>(null);
   const [showAITutor, setShowAITutor] = useState(false);
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
-  const [atomRotation, setAtomRotation] = useState({ dx: 0, dy: 0 });
 
+  // ✅ Default theme from system
+  const [theme, setTheme] = useState<'dark' | 'light'>(
+    window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+  );
+
+  const [atomRotation, setAtomRotation] = useState({ dx: 0, dy: 0 });
   const [message, setMessage] = useState("Loading...");
 
   // ✅ Backend check
@@ -33,12 +37,14 @@ const App: React.FC = () => {
       .catch(() => setMessage("Backend offline"));
   }, []);
 
-  // ✅ FIXED THEME SYSTEM (TAILWIND DARK MODE ONLY)
+  // ✅ CRITICAL FIX: Proper Tailwind dark mode handling
   useEffect(() => {
+    const html = document.documentElement;
+
     if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
+      html.classList.add('dark');
     } else {
-      document.documentElement.classList.remove('dark');
+      html.classList.remove('dark');
     }
   }, [theme]);
 
@@ -129,7 +135,6 @@ const App: React.FC = () => {
           ))}
         </div>
 
-        {/* Graph */}
         {selectedSubject?.name === "Mathematics" && (
           <GraphVisualizer />
         )}
@@ -143,7 +148,7 @@ const App: React.FC = () => {
     bg-white text-slate-900 
     dark:bg-slate-950 dark:text-white">
 
-      {/* Theme Toggle */}
+      {/* 🌗 Theme Toggle */}
       <button
         onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
         className="fixed top-6 right-6 px-4 py-2 rounded-lg bg-indigo-600 text-white z-[200]"
@@ -151,7 +156,7 @@ const App: React.FC = () => {
         {theme === 'dark' ? '☀️ Light' : '🌙 Dark'}
       </button>
 
-      {/* Backend Status */}
+      {/* Backend */}
       <div className="fixed bottom-4 left-4 text-sm opacity-70">
         Backend: {message}
       </div>
@@ -203,7 +208,7 @@ const App: React.FC = () => {
 
       </AnimatePresence>
 
-      {/* AI Button */}
+      {/* 🤖 AI Button */}
       <button
         onClick={() => setShowAITutor(!showAITutor)}
         className="fixed bottom-8 right-8 w-16 h-16 rounded-2xl bg-indigo-600 flex items-center justify-center"
