@@ -2,27 +2,37 @@ import QuizPage from './components/Quiz';
 import { generateQuizAI } from './data/quizData';
 
 import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState } from 'react';
 
-import React, { useState, useEffect } from 'react';
 import AtomVisualizer from './components/AtomicVisualizer';
 import PeriodicTable from './components/PeriodicTable';
 import TrendsVisualizer from './components/TrendsVisualizer';
+import ElementComparison from './components/ElementComparison';
+import BondingLab from './components/BondingLab';
+import GeometryLab from './components/GeometryLab';
+import HistoricalModels from './components/HistoricalModels';
+import QuantumConfigLab from './components/QuantumConfigLab';
+import QuantumNumbersLab from './components/QuantumNumbersLab';
+import AufbauChart from './components/AufbauChart';
+
 import LandingPage from './components/LandingPage';
-import { getElements } from './services/elementsService';
 import SubjectPage from './components/SubjectPage';
 import TopicPage from './components/TopicPage';
 import GestureController from './components/GestureController';
 
 import { ElementData, Subject, Topic, ViewState, TopicId } from './types/types';
 import { MessageSquare, X } from 'lucide-react';
+
 import { Language, translations } from './services/translations';
+import AuthPage from './components/AuthPage';
+import { AuthProvider, useAuth } from './AuthContext';
+import { ELEMENTS } from './utils/constants';
 
-const App: React.FC = () => {
+// ================= APP CONTENT =================
+const AppContent: React.FC = () => {
+  const { user, isLoading: authLoading } = useAuth();
 
-  const [elements, setElements] = useState<ElementData[]>([]);
-  const [selectedElement, setSelectedElement] = useState<ElementData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
+  const [selectedElement, setSelectedElement] = useState<ElementData>(ELEMENTS[0]);
   const [viewState, setViewState] = useState<ViewState>(ViewState.LANDING);
   const [selectedSubject, setSelectedSubject] = useState<Subject | null>(null);
   const [selectedTopic, setSelectedTopic] = useState<Topic | null>(null);
@@ -37,22 +47,9 @@ const App: React.FC = () => {
   const [quizQuestions, setQuizQuestions] = useState<any[]>([]);
   const [quizLevel, setQuizLevel] = useState<'basic' | 'intermediate' | 'difficult'>('basic');
 
-  // ✅ prevent same quiz repeat
-  const [lastQuizHash, setLastQuizHash] = useState<string>("");
-
-  useEffect(() => {
-    getElements()
-      .then(data => {
-        if (data?.length) {
-          setElements(data);
-          setSelectedElement(data[0]);
-        }
-      })
-      .finally(() => setIsLoading(false));
-  }, []);
-
   const t = (key: string) => translations[key]?.[language] || key;
 
+  // ================= SUBJECT FLOW =================
   const handleSelectSubject = (subject: Subject) => {
     setSelectedSubject(subject);
     setViewState(ViewState.SUBJECT);
@@ -63,59 +60,79 @@ const App: React.FC = () => {
     setViewState(ViewState.TOPIC);
   };
 
+  // ================= VISUALIZATION =================
   const renderVisualization = (topicId: TopicId) => {
-    if (isLoading) return <div className="p-10 text-white">Loading...</div>;
-
     switch (topicId) {
       case TopicId.ATOMIC_STRUCTURE:
         return (
           <>
-            {selectedElement && (
-              <AtomVisualizer element={selectedElement} rotation={atomRotation} />
-            )}
+            <AtomVisualizer element={selectedElement} rotation={atomRotation} />
             <PeriodicTable
-              elements={elements}
+              elements={[]}
               onSelect={setSelectedElement}
-              selectedSymbol={selectedElement?.symbol || ''}
+              selectedSymbol={selectedElement.symbol}
             />
           </>
         );
 
       case TopicId.PERIODIC_TRENDS:
-        return <TrendsVisualizer />;
+        return (
+          <>
+            <TrendsVisualizer />
+            <ElementComparison />
+          </>
+        );
+
+      case TopicId.MOLECULAR_STRUCTURE:
+        return (
+          <>
+            <BondingLab />
+            <GeometryLab />
+          </>
+        );
+
+      case TopicId.QUANTUM_NUMBERS:
+        return <QuantumNumbersLab />;
+
+      case TopicId.HISTORICAL_MODELS:
+        return <HistoricalModels />;
+
+      case TopicId.QUANTUM_CONFIG:
+        return (
+          <>
+            <QuantumConfigLab element={selectedElement} />
+            <AufbauChart atomicNumber={selectedElement.number} />
+          </>
+        );
 
       default:
         return <div className="text-white p-10">Coming Soon</div>;
     }
   };
 
-  // ✅ FINAL QUIZ START (ANTI-REPEAT + TRUE RANDOM CALL)
+  // ================= QUIZ =================
   const startQuiz = () => {
     if (!selectedSubject) return;
 
-    let generated = generateQuizAI(selectedSubject.name, quizLevel);
+    const generated = generateQuizAI(selectedSubject.name, quizLevel);
 
-    if (!generated || generated.length === 0) {
+    if (!generated.length) {
       alert("Quiz generation failed");
       return;
     }
 
-    const hash = JSON.stringify(generated);
-
-    // 🚫 prevent same quiz appearing twice
-    if (hash === lastQuizHash) {
-      generated = generateQuizAI(selectedSubject.name, quizLevel);
-    }
-
-    setLastQuizHash(JSON.stringify(generated));
     setQuizQuestions(generated);
     setShowQuiz(true);
   };
 
+  // ================= AUTH =================
+  if (authLoading) return null;
+  if (!user) return <AuthPage />;
+
   return (
     <div className="min-h-screen bg-[#020617] text-white">
 
-      {/* ✅ QUIZ SCREEN */}
+      {/* QUIZ */}
       {showQuiz && (
         <QuizPage
           questions={quizQuestions}
@@ -142,16 +159,14 @@ const App: React.FC = () => {
                   language={language}
                 />
 
-                {/* ✅ LEVEL SELECTOR */}
+                {/* LEVEL SELECTOR */}
                 <div className="fixed bottom-36 right-8 flex gap-2">
                   {["basic", "intermediate", "difficult"].map((lvl) => (
                     <button
                       key={lvl}
                       onClick={() => setQuizLevel(lvl as any)}
-                      className={`px-3 py-1 rounded capitalize transition ${
-                        quizLevel === lvl
-                          ? "bg-indigo-600"
-                          : "bg-white/10 hover:bg-white/20"
+                      className={`px-3 py-1 rounded ${
+                        quizLevel === lvl ? "bg-indigo-600" : "bg-white/10"
                       }`}
                     >
                       {lvl}
@@ -159,10 +174,10 @@ const App: React.FC = () => {
                   ))}
                 </div>
 
-                {/* ✅ QUIZ BUTTON */}
+                {/* START QUIZ */}
                 <button
                   onClick={startQuiz}
-                  className="fixed bottom-24 right-8 px-5 py-3 bg-green-600 rounded-xl hover:bg-green-700 transition"
+                  className="fixed bottom-24 right-8 px-5 py-3 bg-green-600 rounded-xl hover:bg-green-700"
                 >
                   Start Quiz
                 </button>
@@ -198,6 +213,15 @@ const App: React.FC = () => {
         </>
       )}
     </div>
+  );
+};
+
+// ================= ROOT APP =================
+const App: React.FC = () => {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 };
 
